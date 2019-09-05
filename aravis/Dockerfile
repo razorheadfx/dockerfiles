@@ -1,16 +1,23 @@
 FROM ubuntu:bionic
 
 # install deps
-# including those for usb and packet support
+# including those for usb and packet support,
+# the gstreamer plugin and the viewer
+# the viewer also requires gstreamer plugin collections good and bad
 RUN apt-get update \
 && apt-get install -y \
     build-essential \
     make \
     intltool \
+    iputils-ping \
     libaudit-dev \
     libglib2.0-dev \
     libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-good \
     libgtk-3-dev \
+    libnotify-dev \
     libusb-1.0-0-dev \
     libxml2-dev \
     wget \
@@ -27,7 +34,7 @@ RUN wget -c http://ftp.acc.umu.se/pub/GNOME/sources/aravis/0.6/aravis-0.6.4.tar.
 # a of now this build process only works for the LTS versions because the dev version
 # uses meson instead of autotools
 RUN cd /aravis \
-&&./configure \
+&&./configure --enable-viewer --enable-gst-plugin \
 && make \
 && make install
 
