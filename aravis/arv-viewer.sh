@@ -6,7 +6,9 @@
 
 docker run --rm -i -t \
     --net=host \
+    -v /dev/bus/usb:/dev/bus/usb \
     -e DISPLAY=$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:/root/.Xauthority:rw \
     aravis \
-          /bin/bash -c "LD_LIBRARY_PATH=/usr/local/lib/ NO_AT_BRIDGE=1 arv-viewer"
+          /bin/bash -c "arv-viewer"

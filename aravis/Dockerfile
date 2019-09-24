@@ -16,6 +16,7 @@ RUN apt-get update \
     libgstreamer-plugins-base1.0-dev \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-good \
+    gstreamer1.0-tools \
     libgtk-3-dev \
     libnotify-dev \
     libusb-1.0-0-dev \
@@ -34,8 +35,9 @@ RUN wget -c http://ftp.acc.umu.se/pub/GNOME/sources/aravis/0.6/aravis-0.6.4.tar.
 # a of now this build process only works for the LTS versions because the dev version
 # uses meson instead of autotools
 RUN cd /aravis \
-&&./configure --enable-viewer --enable-gst-plugin \
+&&./configure --enable-viewer --enable-gst-plugin --enable-usb \
 && make \
 && make install
 
-
+ENV GST_PLUGIN_PATH /usr/local/lib/gstreamer-1.0
+ENV LD_LIBRARY_PATH /usr/local/lib/
